@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Deploy to AWS Cloudfront
           command: |
-            aws configure set preview.cloudfront
+            aws configure set preview.cloudfront true
             if ["${CURRENT_BRANCH}" == "master"]
             then
               aws cloudfront create-invalidation --distribution-id ${AWS_PROD_DISTRIBUTION_ID} --paths /\*
@@ -95,6 +95,7 @@ jobs:
             else
               aws cloudfront create-invalidation --distribution-id ${AWS_DEV_DISTIBUTION_ID} --paths /\*
             fi 
+
 workflows:
   build_and_deploy:
     jobs:
