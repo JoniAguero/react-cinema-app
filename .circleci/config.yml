@@ -221,12 +221,7 @@ workflows:
             - notify
           filters:
             tags:
-              only: /^v.*/
-              branches:
-                only:
-                  - develop
-                  - staging
-                  - master     
+              only: /^v.*/  
       - pause_workflow:
          type: approval
          requires:
