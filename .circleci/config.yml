@@ -222,7 +222,6 @@ workflows:
           filters:
             tags:
               only: /^v.*/
-            filters:
               branches:
                 only:
                   - develop
