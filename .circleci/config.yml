@@ -11,7 +11,6 @@ executors:
   slack-executor:
     docker:
       - image: 'cibuilds/base:latest'
-    resource_class: small
 
 aliases:
   - &show-current-branch-name
@@ -110,35 +109,6 @@ jobs:
             else
               aws cloudfront create-invalidation --distribution-id ${AWS_DEV_DISTIBUTION_ID} --paths /\*
             fi
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          mentions: "@EngineeringTeam"
-      # When there is a successful deployment, send a notification with a different template.
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-      - slack/notify:
-          event: always
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Current Job: $CIRCLE_JOB"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Write some text here"
-                  }
-                }
-              ]
-            }
 
   notify:
     executor: slack-executor
@@ -216,20 +186,3 @@ workflows:
                 - develop
                 - staging
                 - master
-      - slack/on-hold:
-          context:
-            - slack-secrets
-          requires:
-            - notify
-          filters:
-            tags:
-              only: /^v.*/  
-      - pause_workflow:
-         type: approval
-         requires:
-           - notify
-           - slack/on-hold
-         filters:
-           tags:
-             only: /^v.*/
-          
