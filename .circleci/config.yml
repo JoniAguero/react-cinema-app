@@ -114,23 +114,8 @@ jobs:
     executor: slack-executor
     steps:
       - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*${CIRCLE_BRANCH} branch deployment to AWS S3 and Cloudfront is complete*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
+          message: "${CIRCLE_BRANCH} branch deployment to AWS S3 and Cloudfront is complete."
           webhook: $SLACK_WEBHOOK
-          event: pass
       - slack/status:
           webhook: $SLACK_WEBHOOK
 workflows:
