@@ -6,7 +6,7 @@ import './Paginate.css';
 const Paginate = (props: any) => {
   const { currentPage, totalPages, paginate } = props;
   const [page, setPage] = useState(0);
-  const [totalPageNumber, setTotalPageNumber] = useState(0);
+  const [totalPageNumber, setTotalPageNumber] = useState();
 
   useEffect(() => {
     setPage(currentPage);

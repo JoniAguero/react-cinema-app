@@ -1,29 +1,38 @@
-import {
-  MovieActionTypes,
-  GET_MOVIES,
-  MoviesReducer
-} from '../types/movie.types'
+import { MOVIE_LIST, RESPONSE_PAGE, LOAD_MORE_RESULTS, MOVIE_TYPE } from '../types/moviesTypes';
 
-const initialState: MoviesReducer = {
-  movies: [],
-  movieSelected: {
-    name: '',
-    id: '',
-    duration: 0
-  }
-}
+const initialState = {
+  list: [''],
+  page: 1,
+  totalPages: 0,
+  movieType: 'now_playing'
+};
 
-export function moviesReducer(
-  state = initialState,
-  action: MovieActionTypes
-): MoviesReducer {
+export default (state = initialState, action: any) => {
   switch (action.type) {
-    case GET_MOVIES:
+    case MOVIE_LIST:
       return {
         ...state,
-        movies: [...state.movies]
-      }
+        list: action.payload
+      };
+    case RESPONSE_PAGE:
+      return {
+        ...state,
+        page: action.payload.page,
+        totalPages: action.payload.totalPages
+      };
+    case LOAD_MORE_RESULTS:
+      return {
+        ...state,
+        list: [...state.list, ...action.payload.list],
+        page: action.payload.page,
+        totalPages: action.payload.totalPages
+      };
+    case MOVIE_TYPE:
+      return {
+        ...state,
+        movieType: action.payload
+      };
     default:
-      return state
+      return state;
   }
-}
+};
