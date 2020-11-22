@@ -13,7 +13,6 @@ const MainContent = (props: any) => {
   const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState([]);
-  const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
 
   const HEADER_TYPE: any = {
     now_playing: 'Now Playing',
@@ -23,27 +22,17 @@ const MainContent = (props: any) => {
   };
 
   useEffect(() => {
-    if (randomMovies.length) {
-      const IMAGES: any = [
-        {
-          id: 1,
-          url: `${IMAGE_URL}${randomMovies[0].backdrop_path}`
-        },
-        {
-          id: 2,
-          url: `${IMAGE_URL}${randomMovies[1].backdrop_path}`
-        },
-        {
-          id: 3,
-          url: `${IMAGE_URL}${randomMovies[2].backdrop_path}`
-        },
-        {
-          id: 4,
-          url: `${IMAGE_URL}${randomMovies[3].backdrop_path}`
-        }
-      ];
-      setImages(IMAGES);
-    }
+
+    const IMAGES: any = [
+      ...list.slice(0, 4).map((movie: any, index: any) => {
+        return {
+          id: index,
+          url: `${IMAGE_URL}${movie.backdrop_path}`
+        } 
+      })
+    ];
+    setImages(IMAGES);
+    
     // eslint-disable-next-line
   }, []);
 
