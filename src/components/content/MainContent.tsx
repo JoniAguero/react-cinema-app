@@ -13,6 +13,7 @@ const MainContent = (props: any) => {
   const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState([]);
+  const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
 
   const HEADER_TYPE: any = {
     now_playing: 'Now Playing',
